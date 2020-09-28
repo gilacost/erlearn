@@ -1,4 +1,4 @@
--module(solution).
+-module(solution_01).
 -export([main/0]).
 
 solveMeFirst(A, B) ->
