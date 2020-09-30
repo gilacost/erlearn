@@ -12,4 +12,4 @@ ok
 {error,non_existing}
 3> c(solution).
 {ok,solution}
-4> solution:main().
+:4> solution:main().
