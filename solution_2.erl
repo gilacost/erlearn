@@ -8,14 +8,8 @@
 simpleArraySum(Ar) ->
     lists:sum(Ar).
 
-read_multiple_lines_as_list_of_strings(N) ->
-    read_multiple_lines_as_list_of_strings(N, []).
 
-read_multiple_lines_as_list_of_strings(0, Acc) ->
-    lists:reverse(Acc);
 
-read_multiple_lines_as_list_of_strings(N, Acc) when N > 0 ->
-    read_multiple_lines_as_list_of_strings(N - 1, [string:chomp(io:get_line("")) | Acc]).
 
 main() ->
     {ok, Fptr} = file:open(getenv("OUTPUT_PATH"), [write]),
