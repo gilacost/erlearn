@@ -1,27 +1,25 @@
 -module(solution_12).
+
 -export([main/0]).
+
 -import(os, [getenv/1]).
 
 % Complete the kangaroo function below.
 kangaroo(X1, V1, X2, V2) when V1 > V2, X1 < X2 ->
-
     MeetingTime = calculateMeetingTime(X1, V1, X2, V2),
     will_meet_at_exact_second(MeetingTime);
 kangaroo(X1, V1, X2, V2) when V2 > V1, X2 < X1 ->
-
     MeetingTime = calculateMeetingTime(X1, V1, X2, V2),
     will_meet_at_exact_second(MeetingTime);
-
 kangaroo(_X1, _V1, _X2, _V2) ->
-
     "NO".
 
 calculateMeetingTime(XOa, Va, XOb, Vb) ->
-    (XOa - XOb)  / (Vb - Va).
+    (XOa - XOb) / (Vb - Va).
 
 will_meet_at_exact_second(Time) ->
     if
-        (Time - trunc(Time)) /= 0 -> "NO" ;
+        (Time - trunc(Time)) /= 0 -> "NO";
         true -> "YES"
     end.
 

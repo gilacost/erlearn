@@ -1,5 +1,7 @@
 -module(solution_04).
+
 -export([main/0]).
+
 -import(os, [getenv/1]).
 
 % Complete the aVeryBigSum function below.
@@ -13,7 +15,13 @@ main() ->
 
     ArTemp = re:split(string:chomp(io:get_line("")), "\\s+", [{return, list}, trim]),
 
-    Ar = lists:map(fun(X) -> {I, _} = string:to_integer(X), I end, ArTemp),
+    Ar = lists:map(
+        fun(X) ->
+            {I, _} = string:to_integer(X),
+            I
+        end,
+        ArTemp
+    ),
 
     Result = aVeryBigSum(Ar, ArCount),
 

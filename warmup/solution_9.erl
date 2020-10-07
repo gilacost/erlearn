@@ -1,7 +1,8 @@
 -module(solution_9).
--export([main/0]).
--import(os, [getenv/1]).
 
+-export([main/0]).
+
+-import(os, [getenv/1]).
 
 birthdayCakeCandles(Candles, CandlesCount) ->
     CandlesOfCount = lists:sort(lists:sublist(Candles, CandlesCount)),
@@ -12,11 +13,25 @@ birthdayCakeCandles(Candles, CandlesCount) ->
 main() ->
     {ok, Fptr} = file:open(getenv("OUTPUT_PATH"), [write]),
 
-    {CandlesCount, _} = string:to_integer(re:replace(io:get_line(""), "(^\\s+)|(\\s+$)", "", [global, {return, list}])),
+    {CandlesCount, _} = string:to_integer(
+        re:replace(io:get_line(""), "(^\\s+)|(\\s+$)", "", [global, {return, list}])
+    ),
 
-    CandlesTemp = re:split(re:replace(io:get_line(""), "\\s+$", "", [global, {return, list}]), "\\s+", [{return, list}]),
+    CandlesTemp = re:split(
+        re:replace(io:get_line(""), "\\s+$", "", [global, {return, list}]),
+        "\\s+",
+        [{return, list}]
+    ),
 
-    Candles = lists:map(fun(X) -> {I, _} = string:to_integer(re:replace(X, "(^\\s+)|(\\s+$)", "", [global, {return, list}])), I end, CandlesTemp),
+    Candles = lists:map(
+        fun(X) ->
+            {I, _} = string:to_integer(
+                re:replace(X, "(^\\s+)|(\\s+$)", "", [global, {return, list}])
+            ),
+            I
+        end,
+        CandlesTemp
+    ),
 
     Result = birthdayCakeCandles(Candles, CandlesCount),
 

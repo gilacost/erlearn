@@ -1,5 +1,7 @@
 -module(solution_02).
+
 -export([main/0]).
+
 -import(os, [getenv/1]).
 
 %
@@ -8,9 +10,6 @@
 simpleArraySum(Ar) ->
     lists:sum(Ar).
 
-
-
-
 main() ->
     {ok, Fptr} = file:open(getenv("OUTPUT_PATH"), [write]),
 
@@ -18,7 +17,13 @@ main() ->
 
     ArTemp = re:split(string:chomp(io:get_line("")), "\\s+", [{return, list}, trim]),
 
-    Ar = lists:map(fun(X) -> {I, _} = string:to_integer(X), I end, ArTemp),
+    Ar = lists:map(
+        fun(X) ->
+            {I, _} = string:to_integer(X),
+            I
+        end,
+        ArTemp
+    ),
 
     Result = simpleArraySum(Ar),
 
