@@ -4,7 +4,7 @@
 
 -import(os, [getenv/1]).
 
-timeConversion(<<Hours:2/binary, Rest:6/binary, Period/binary>>) ->
+time_conversion(<<Hours:2/binary, Rest:6/binary, Period/binary>>) ->
     MilitarTime =
         case Period of
             <<"AM">> ->
@@ -40,7 +40,7 @@ main() ->
 
     erlang:display(S),
 
-    Result = timeConversion(list_to_binary(S)),
+    Result = time_conversion(list_to_binary(S)),
 
     erlang:display(Result),
 

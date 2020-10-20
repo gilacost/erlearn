@@ -4,8 +4,7 @@
 
 -import(os, [getenv/1]).
 
-% Complete the plusMinus function below.
-plusMinus(Arr) ->
+plus_minus(Arr) ->
     Len = length(Arr),
 
     {Pos, Neg, Zero} = lists:foldr(
@@ -40,6 +39,6 @@ main() ->
         ArrTemp
     ),
 
-    plusMinus(Arr),
+    plus_minus(Arr),
 
     ok.

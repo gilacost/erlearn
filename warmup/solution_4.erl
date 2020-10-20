@@ -5,7 +5,7 @@
 -import(os, [getenv/1]).
 
 % Complete the aVeryBigSum function below.
-aVeryBigSum(Ar, ArCount) ->
+a_very_big_sum(Ar, ArCount) ->
     lists:sum(lists:sublist(Ar, ArCount)).
 
 main() ->
@@ -23,7 +23,7 @@ main() ->
         ArTemp
     ),
 
-    Result = aVeryBigSum(Ar, ArCount),
+    Result = a_very_big_sum(Ar, ArCount),
 
     io:fwrite(Fptr, "~w~n", [Result]),
 

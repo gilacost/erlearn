@@ -7,7 +7,7 @@
 %
 % Complete the simpleArraySum function below.
 %
-simpleArraySum(Ar) ->
+simple_array_sum(Ar) ->
     lists:sum(Ar).
 
 main() ->
@@ -25,7 +25,7 @@ main() ->
         ArTemp
     ),
 
-    Result = simpleArraySum(Ar),
+    Result = simple_array_sum(Ar),
 
     io:fwrite(Fptr, "~w~n", [Result]),
 

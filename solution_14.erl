@@ -4,7 +4,7 @@
 
 -import(os, [getenv/1]).
 
-breakingRecords(Scores) ->
+breaking_records(Scores) ->
     {_, Max, Min} =
         lists:foldl(
             fun(Score, {PrevScoresAcc, BreakMaxCount, BreakMinCount}) ->
@@ -22,9 +22,6 @@ breakingRecords(Scores) ->
                                 true ->
                                     if
                                         CurrentMin > Score ->
-                                            erlang:display("estoy loco"),
-                                            erlang:display(CurrentMin),
-                                            erlang:display(Score),
                                             {BreakMaxCount, BreakMinCount + 1};
                                         true ->
                                             {BreakMaxCount, BreakMinCount}
@@ -65,7 +62,7 @@ main() ->
         ScoresTemp
     ),
 
-    Result = breakingRecords(Scores),
+    Result = breaking_records(Scores),
 
     io:fwrite(Fptr, "~s~n", [lists:join(" ", lists:map(fun(X) -> integer_to_list(X) end, Result))]),
 

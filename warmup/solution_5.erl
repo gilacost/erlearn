@@ -4,14 +4,7 @@
 
 -import(os, [getenv/1]).
 
-%
-% Complete the 'diagonalDifference' function below.
-%
-% The function is expected to return an INTEGER.
-% The function accepts 2D_INTEGER_ARRAY arr as parameter.
-%
-
-diagonalDifference(Arr) ->
+diagonal_difference(Arr) ->
     WithIndex =
         lists:zip(lists:seq(1, length(Arr)), Arr),
 
@@ -61,7 +54,7 @@ main() ->
         ArrTemp
     ),
 
-    Result = diagonalDifference(Arr),
+    Result = diagonal_difference(Arr),
 
     io:fwrite(Fptr, "~w~n", [Result]),
 

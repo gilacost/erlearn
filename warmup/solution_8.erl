@@ -3,7 +3,7 @@
 -export([main/0]).
 
 % Complete the miniMaxSum function below.
-miniMaxSum(Arr) ->
+mini_max_sum(Arr) ->
     Max = lists:max(Arr),
 
     Min = lists:min(Arr),
@@ -28,6 +28,6 @@ main() ->
         ArrTemp
     ),
 
-    miniMaxSum(Arr),
+    mini_max_sum(Arr),
 
     ok.

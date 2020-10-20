@@ -4,7 +4,7 @@
 
 -import(os, [getenv/1]).
 
-getTotalX(A, B) ->
+get_total_x(A, B) ->
     MinA = lists:min(A),
     MaxB = lists:min(B),
 
@@ -74,10 +74,7 @@ main() ->
         BrrTemp
     ),
 
-    erlang:display(BrrTemp),
-    erlang:display(Brr),
-
-    Total = getTotalX(Arr, Brr),
+    Total = get_total_x(Arr, Brr),
 
     io:fwrite(Fptr, "~w~n", [Total]),
 

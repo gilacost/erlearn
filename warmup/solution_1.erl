@@ -2,7 +2,7 @@
 
 -export([main/0]).
 
-solveMeFirst(A, B) ->
+solve_me_first(A, B) ->
     A + B.
 
 main() ->

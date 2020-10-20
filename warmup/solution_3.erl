@@ -5,20 +5,20 @@
 -import(os, [getenv/1]).
 
 % Complete the compareTriplets function below.
-compareTriplets(A, B) ->
+compare_triplets(A, B) ->
     ValuePairs = lists:zip(A, B),
 
-    ResultComparation = lists:map(fun(Pair) -> comparePairs(Pair) end, ValuePairs),
+    ResultComparation = lists:map(fun(Pair) -> compare_pairs(Pair) end, ValuePairs),
 
     {Ar, Br} = lists:unzip(ResultComparation),
 
     lists:map(fun(R) -> lists:sum(R) end, [Ar, Br]).
 
-comparePairs({Ax, Bx}) when Ax > Bx ->
+compare_pairs({Ax, Bx}) when Ax > Bx ->
     {1, 0};
-comparePairs({Ax, Bx}) when Ax < Bx ->
+compare_pairs({Ax, Bx}) when Ax < Bx ->
     {0, 1};
-comparePairs({Ax, Bx}) when Ax == Bx ->
+compare_pairs({Ax, Bx}) when Ax == Bx ->
     {0, 0}.
 
 main() ->
@@ -52,7 +52,7 @@ main() ->
         BTemp
     ),
 
-    Result = compareTriplets(A, B),
+    Result = compare_triplets(A, B),
 
     io:fwrite(Fptr, "~s~n", [lists:join(" ", lists:map(fun(X) -> integer_to_list(X) end, Result))]),
 

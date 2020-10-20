@@ -4,7 +4,7 @@
 
 -import(os, [getenv/1]).
 
-birthdayCakeCandles(Candles, CandlesCount) ->
+birthday_cake_candles(Candles, CandlesCount) ->
     CandlesOfCount = lists:sort(lists:sublist(Candles, CandlesCount)),
     Max = lists:max(CandlesOfCount),
     {_, MaxList} = lists:splitwith(fun(X) -> X /= Max end, CandlesOfCount),
@@ -33,7 +33,7 @@ main() ->
         CandlesTemp
     ),
 
-    Result = birthdayCakeCandles(Candles, CandlesCount),
+    Result = birthday_cake_candles(Candles, CandlesCount),
 
     io:fwrite(Fptr, "~w~n", [Result]),
 

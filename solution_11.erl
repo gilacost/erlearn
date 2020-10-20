@@ -3,14 +3,14 @@
 -export([main/0]).
 
 % Complete the countApplesAndOranges function below.
-countApplesAndOranges(S, T, A, B, Apples, Oranges) ->
-    ApplesCount = countFruit(Apples, S, T, A),
-    OrangesCount = countFruit(Oranges, S, T, B),
+count_apples_and_oranges(S, T, A, B, Apples, Oranges) ->
+    ApplesCount = count_fruit(Apples, S, T, A),
+    OrangesCount = count_fruit(Oranges, S, T, B),
 
     Line = "~w~n~w",
     io:fwrite(io_lib:format(Line, [ApplesCount, OrangesCount])).
 
-countFruit(Fruits, S, T, TreePos) ->
+count_fruit(Fruits, S, T, TreePos) ->
     lists:foldl(
         fun(X, Acc) ->
             FruitPos = TreePos + X,
@@ -65,6 +65,6 @@ main() ->
         OrangesTemp
     ),
 
-    countApplesAndOranges(S, T, A, B, Apples, Oranges),
+    count_apples_and_oranges(S, T, A, B, Apples, Oranges),
 
     ok.
