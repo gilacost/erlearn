@@ -4,60 +4,35 @@
 
 -import(os, [getenv/1]).
 
-migratoryBirds(Arr) ->
-    UniqElList = remove_dups(Arr),
-    Count = lists:foldl(
-        fun(BirdType, Acc) ->
-            Acc ++ [{BirdType, count_in_list(Arr, BirdType)}]
+day_of_programmer(Year) ->
+    IsGregorian =
+        if
+            Year > 1917 -> true;
+            true -> false
         end,
-        [],
-        UniqElList
-    ),
-    {MostSeen, _} = lists:split(
-        2,
-        lists:sort(fun({_BirdTypeA, SeenA}, {_BirdTypeB, SeenB}) -> SeenA > SeenB end, Count)
-    ),
-    case MostSeen of
-        [{BirdTypeA, SeenA}, {BirdTypeB, SeenB}] when SeenA == SeenB ->
-            lists:min([BirdTypeA, BirdTypeB]);
-        [{BirdTypeA, SeenA}, _] ->
-            BirdTypeA;
-        _ ->
-            true
-    end.
+    IsLeapYear = is_leap_year(Year, IsGregorian),
+    SeptemberDay = september_day(Year, IsLeapYear),
+    SeptemberDay ++ ".09." ++ integer_to_list(Year).
 
-remove_dups([]) -> [];
-remove_dups([H | T]) -> [H | [X || X <- remove_dups(T), X /= H]].
+is_leap_year(Year, IsGregorian) when IsGregorian == true ->
+    (Year rem 400 == 0) or ((Year rem 4 == 0) and (Year rem 100 /= 0));
+is_leap_year(Year, IsGregorian) when IsGregorian == false ->
+    (Year rem 4 == 0).
 
-count_in_list(L, El) ->
-    length([X || X <- L, X == El]).
+september_day(1918, _) -> "26";
+september_day(_, true) -> "12";
+september_day(_, _) -> "13".
 
 main() ->
     {ok, Fptr} = file:open(getenv("OUTPUT_PATH"), [write]),
 
-    {ArrCount, _} = string:to_integer(
+    {Year, _} = string:to_integer(
         re:replace(io:get_line(""), "(^\\s+)|(\\s+$)", "", [global, {return, list}])
     ),
 
-    ArrTemp = re:split(
-        re:replace(io:get_line(""), "\\s+$", "", [global, {return, list}]),
-        "\\s+",
-        [{return, list}]
-    ),
+    Result = day_of_programmer(Year),
 
-    Arr = lists:map(
-        fun(X) ->
-            {I, _} = string:to_integer(
-                re:replace(X, "(^\\s+)|(\\s+$)", "", [global, {return, list}])
-            ),
-            I
-        end,
-        ArrTemp
-    ),
-
-    Result = migratoryBirds(Arr),
-
-    io:fwrite(Fptr, "~w~n", [Result]),
+    io:fwrite(Fptr, "~s~n", [Result]),
 
     file:close(Fptr),
 
