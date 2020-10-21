@@ -7,5 +7,5 @@ solve_me_first(A, B) ->
 
 main() ->
     {ok, [A, B]} = io:fread("", "~d~d"),
-    Res = solveMeFirst(A, B),
+    Res = solve_me_first(A, B),
     io:format("~p~n", [Res]).
