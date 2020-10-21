@@ -1,1 +1,1 @@
-{'*', [debug_info, return]}.
+{'*', [debug_info, report, warnings_as_errors]}.
