@@ -1,10 +1,9 @@
--module(solution_03).
+-module(solution_3).
 
 -export([main/0]).
 
 -import(os, [getenv/1]).
 
-% Complete the compareTriplets function below.
 compare_triplets(A, B) ->
     ValuePairs = lists:zip(A, B),
 

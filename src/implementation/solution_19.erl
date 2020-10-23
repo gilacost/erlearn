@@ -20,7 +20,7 @@ main() ->
         {return, list}
     ]),
 
-    {N, _} = string:to_integer(lists:nth(1, Nk)),
+    {_N, _} = string:to_integer(lists:nth(1, Nk)),
 
     {K, _} = string:to_integer(lists:nth(2, Nk)),
 

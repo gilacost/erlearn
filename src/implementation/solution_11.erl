@@ -41,9 +41,9 @@ main() ->
 
     Mn = re:split(string:chomp(io:get_line("")), "\\s+", [{return, list}, trim]),
 
-    {M, _} = string:to_integer(lists:nth(1, Mn)),
+    {_M, _} = string:to_integer(lists:nth(1, Mn)),
 
-    {N, _} = string:to_integer(lists:nth(2, Mn)),
+    {_N, _} = string:to_integer(lists:nth(2, Mn)),
 
     ApplesTemp = re:split(string:chomp(io:get_line("")), "\\s+", [{return, list}, trim]),
 

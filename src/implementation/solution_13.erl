@@ -36,15 +36,13 @@ main() ->
         "\\s+",
         [{return, list}]
     ),
-    erlang:display(FirstMultipleInput),
-    {N, _} = string:to_integer(lists:nth(1, FirstMultipleInput)),
-    {M, _} = string:to_integer(lists:nth(2, FirstMultipleInput)),
+    {_N, _} = string:to_integer(lists:nth(1, FirstMultipleInput)),
+    {_M, _} = string:to_integer(lists:nth(2, FirstMultipleInput)),
     ArrTemp = re:split(
         re:replace(io:get_line(""), "\\s+$", "", [global, {return, list}]),
         "\\s+",
         [{return, list}]
     ),
-    erlang:display(ArrTemp),
     Arr = lists:map(
         fun(X) ->
             {I, _} = string:to_integer(X),

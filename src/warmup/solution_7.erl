@@ -1,4 +1,4 @@
--module(solution_07).
+-module(solution_7).
 
 -export([main/0]).
 

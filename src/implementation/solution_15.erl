@@ -40,7 +40,7 @@ generate_segments(TabletArray, SegmentsSize) ->
 main() ->
     {ok, Fptr} = file:open(getenv("OUTPUT_PATH"), [write]),
 
-    {N, _} = string:to_integer(
+    {_N, _} = string:to_integer(
         re:replace(io:get_line(""), "(^\\s+)|(\\s+$)", "", [global, {return, list}])
     ),
 

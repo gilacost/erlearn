@@ -10,4 +10,4 @@ jobs:
       - uses: gleam-lang/setup-erlang@v1.1.0
         with:
           otp-version: 23.0.3
-      - run: erl -make
+      - run: make test

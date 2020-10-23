@@ -1,19 +1,16 @@
--module(solution_02).
+-module(solution_2).
 
 -export([main/0]).
 
 -import(os, [getenv/1]).
 
-%
-% Complete the simpleArraySum function below.
-%
 simple_array_sum(Ar) ->
     lists:sum(Ar).
 
 main() ->
     {ok, Fptr} = file:open(getenv("OUTPUT_PATH"), [write]),
 
-    {ArCount, _} = string:to_integer(string:chomp(io:get_line(""))),
+    {_ArCount, _} = string:to_integer(string:chomp(io:get_line(""))),
 
     ArTemp = re:split(string:chomp(io:get_line("")), "\\s+", [{return, list}, trim]),
 

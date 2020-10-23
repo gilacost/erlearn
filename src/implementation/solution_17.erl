@@ -20,7 +20,7 @@ migratoryBirds(Arr) ->
     case MostSeen of
         [{BirdTypeA, SeenA}, {BirdTypeB, SeenB}] when SeenA == SeenB ->
             lists:min([BirdTypeA, BirdTypeB]);
-        [{BirdTypeA, SeenA}, _] ->
+        [{BirdTypeA, _SeenA}, _] ->
             BirdTypeA;
         _ ->
             true
@@ -35,7 +35,7 @@ count_in_list(L, El) ->
 main() ->
     {ok, Fptr} = file:open(getenv("OUTPUT_PATH"), [write]),
 
-    {ArrCount, _} = string:to_integer(
+    {_ArrCount, _} = string:to_integer(
         re:replace(io:get_line(""), "(^\\s+)|(\\s+$)", "", [global, {return, list}])
     ),
 

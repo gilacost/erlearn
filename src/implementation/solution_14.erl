@@ -39,18 +39,10 @@ breaking_records(Scores) ->
     erlang:display([Min, Max]),
     [Max, Min].
 
-read_multiple_lines_as_list_of_strings(N) ->
-    read_multiple_lines_as_list_of_strings(N, []).
-
-read_multiple_lines_as_list_of_strings(0, Acc) ->
-    lists:reverse(Acc);
-read_multiple_lines_as_list_of_strings(N, Acc) when N > 0 ->
-    read_multiple_lines_as_list_of_strings(N - 1, [string:chomp(io:get_line("")) | Acc]).
-
 main() ->
     {ok, Fptr} = file:open(getenv("OUTPUT_PATH"), [write]),
 
-    {N, _} = string:to_integer(string:chomp(io:get_line(""))),
+    {_N, _} = string:to_integer(string:chomp(io:get_line(""))),
 
     ScoresTemp = re:split(string:chomp(io:get_line("")), "\\s+", [{return, list}, trim]),
 
