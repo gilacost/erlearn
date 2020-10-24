@@ -1,8 +1,5 @@
 #!/bin/bash
 
-
-rm ./*.beam
-
 next=$(($1+1))
 
 echo $next
