@@ -1,6 +1,6 @@
 test: clean
-		erl -make
-		rebar3 eunit
+		rebar3 eunit -d src
+		make clean
 
 clean:
 		rm -fv **/*.beam

@@ -1,62 +1,81 @@
 -module(solution_21).
 
--export([main/0]).
+-export([main/0, page_count/2]).
 
 -import(os, [getenv/1]).
 
-sock_merchant(_N, Ar) ->
-    SockTypes = remove_dups(Ar),
-    TypesGrouped = count_occurrences(SockTypes, Ar),
-    lists:foldl(
-        fun({_Type, Count}, PairsCount) ->
-            PairsCount + floor(Count / 2)
+% int n: the number of pages in the book
+% int p: the page number to turn to
+%
+page_count(N, P) ->
+    LeftPages = lists:seq(0, N, 2),
+    RightPages = lists:seq(1, N + 1, 2),
+
+    Book = lists:zip(LeftPages, RightPages),
+
+    FromLeft = lists:foldl(
+        fun(PPair, PagesTurned) ->
+            case PPair of
+                {LPage, RPage} when LPage < P, RPage < P -> PagesTurned + 1;
+                _ -> PagesTurned
+            end
         end,
         0,
-        TypesGrouped
-    ).
+        Book
+    ),
 
-count_occurrences(UniqTypeList, SearchList) ->
-    lists:foldl(
-        fun(Type, TypesGrouped) ->
-            TypesGrouped ++
-                [
-                    {Type,
-                        length(
-                            lists:filter(
-                                fun(X) ->
-                                    X == Type
-                                end,
-                                SearchList
-                            )
-                        )}
-                ]
+    FromRight = lists:foldr(
+        fun(PPair, PagesTurned) ->
+            case PPair of
+                {LPage, RPage} when LPage > P, RPage > P -> PagesTurned + 1;
+                _ -> PagesTurned
+            end
         end,
-        [],
-        UniqTypeList
-    ).
-
-remove_dups([]) -> [];
-remove_dups([H | T]) -> [H | [X || X <- remove_dups(T), X /= H]].
+        0,
+        Book
+    ),
+    lists:min([FromLeft, FromRight]).
 
 main() ->
     {ok, Fptr} = file:open(getenv("OUTPUT_PATH"), [write]),
 
     {N, _} = string:to_integer(string:chomp(io:get_line(""))),
 
-    ArTemp = re:split(string:chomp(io:get_line("")), "\\s+", [{return, list}, trim]),
+    {P, _} = string:to_integer(string:chomp(io:get_line(""))),
 
-    Ar = lists:map(
-        fun(X) ->
-            {I, _} = string:to_integer(X),
-            I
-        end,
-        ArTemp
-    ),
-
-    Result = sock_merchant(N, Ar),
+    Result = page_count(N, P),
 
     io:fwrite(Fptr, "~w~n", [Result]),
 
     file:close(Fptr),
 
     ok.
+
+%%
+%% Tests
+%%
+-ifdef(TEST).
+
+-include_lib("eunit/include/eunit.hrl").
+
+page_count_0_test() ->
+    PageCount = page_count(6, 2),
+    ?assert(PageCount =:= 1).
+
+page_count_1_test() ->
+    PageCount = page_count(5, 4),
+    ?assert(PageCount =:= 0).
+
+page_count_2_test() ->
+    PageCount = page_count(4, 4),
+    ?assert(PageCount =:= 0).
+
+page_count_3_test() ->
+    PageCount = page_count(5, 1),
+    ?assert(PageCount =:= 0).
+
+page_count_4_test() ->
+    PageCount = page_count(2059, 117),
+    ?assert(PageCount =:= 58).
+
+-endif.
