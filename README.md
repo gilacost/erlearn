@@ -14,6 +14,12 @@ Run:
 make test
 ```
 
+Running a single test:
+
+```bash
+erl -make && erl -eval 'eunit:test(MODULE).'
+```
+
 ## Emakefile 🤹‍♂️
 
 In order to ensure that warnings are treated as errors an `Emakefile` has been
