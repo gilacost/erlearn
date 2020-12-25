@@ -9,8 +9,7 @@ slices(SliceLength, Series) when SliceLength > length(Series) ->
 slices(SliceLength, []) ->
     erlang:error("Not empty list for series", {SliceLength, []});
 slices(SliceLength, Series) ->
-    [string:slice(Series, 0, SliceLength)] ++
-        do_slice(Series, SliceLength).
+    [string:slice(Series, 0, SliceLength) | do_slice(Series, SliceLength)].
 
 do_slice(List, SliceLength) when is_list(List) ->
     do_slice(List, SliceLength, []).
