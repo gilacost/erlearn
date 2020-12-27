@@ -15,7 +15,9 @@ cat > $1 <<EOF
 
 -export([main/0, readlines/1]).
 
-main() -> "main".
+main() ->
+    Lines = readlines("input"),
+    erlang:display(Lines).
 
 readlines(FileName) ->
     {ok, Data} = file:read_file(FileName),
@@ -24,8 +26,14 @@ readlines(FileName) ->
 
 ocurrences(List, El, string) -> length([X || X <- List, [X] =:= El),
 
-parse([], Buffer) ->
-    Buffer;
+even_print([]) ->
+    [];
+even_print([H | T]) when H rem 2 /= 0 ->
+    even_print(T);
+even_print([H | T]) ->
+    io:format("printing: ~p~n", [H]),
+    [H | even_print(T)].
+
 parse([<<>>], Buffer) ->
     Buffer;
 parse([<<H/binary>> | T], Buffer) ->
@@ -33,7 +41,7 @@ parse([<<H/binary>> | T], Buffer) ->
     parse(T, [Number | Buffer]).
 EOF
 
-cat > $DIR/reba.config <<EOF
+cat > $DIR/rebar.config <<EOF
 %% Erlang compiler options
 {erl_opts, [debug_info, warnings_as_errors]}.
 
