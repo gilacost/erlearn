@@ -36,5 +36,9 @@ parse([<<Row:7/binary, Column:3/binary>> | T], Buffer, MaxId) ->
     RowCalc = binary_partition(Row, {0, 127}),
     ColCalc = binary_partition(Column, {0, 7}),
     Id = (RowCalc * 8) + ColCalc,
+    print_id(Id, RowCalc, ColCalc),
 
     parse(T, [{RowCalc, ColCalc, Id} | Buffer], max(Id, MaxId)).
+
+print_id(1, RowCalc, ColCalc) -> erlang:display({RowCalc, ColCalc});
+print_id(-1, RowCalc, ColCalc) -> erlang:display({RowCalc, ColCalc}).
