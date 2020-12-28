@@ -3,7 +3,7 @@
 -export([main/0, readlines/1]).
 
 main() ->
-    Lines = readlines("input"),
+    Lines = readlines("input_example"),
     erlang:display(Lines).
 
 readlines(FileName) ->
@@ -11,18 +11,29 @@ readlines(FileName) ->
     BinSplit = binary:split(Data, [<<"\n">>], [global]),
     parse(BinSplit, []).
 
-% ocurrences(List, El, string) -> length([X || X <- List, [X] =:= El]),
+row(<<>>, {_Initial, Final}) ->
+    Final;
+row(<<H, T/binary>>, {Initial, Final}) ->
+    row(T, upper_lower(<<H>>, Initial, Final)).
 
-% even_print([]) ->
-%     [];
-% even_print([H | T]) when H rem 2 /= 0 ->
-%     even_print(T);
-% even_print([H | T]) ->
-%     io:format("printing: ~p~n", [H]),
-%     [H | even_print(T)].
+column(<<>>, {_Initial, Final}) ->
+    Final;
+column(<<H, T/binary>>, {Initial, Final}) ->
+    row(T, upper_lower(<<H>>, Initial, Final)).
+
+upper_lower(<<"B">>, Initial, Final) ->
+    {ceil((Initial + Final) / 2), Final};
+upper_lower(<<"F">>, Initial, Final) ->
+    {Initial, (Final + Initial) div 2};
+upper_lower(<<"R">>, Initial, Final) ->
+    {ceil((Initial + Final) / 2), Final};
+upper_lower(<<"L">>, Initial, Final) ->
+    {Initial, (Final + Initial) div 2}.
 
 parse([<<>>], Buffer) ->
     lists:reverse(Buffer);
-parse([<<H/binary>> | T], Buffer) ->
-    {Number, <<>>} = string:to_integer(H),
-    parse(T, [Number | Buffer]).
+parse([<<Row:7/binary, Column:3/binary>> | T], Buffer) ->
+    RowCalc = row(Row, {0, 127}),
+    ColCalc = column(Column, {0, 7}),
+    Id = (RowCalc * 8) + ColCalc,
+    parse(T, [{RowCalc, ColCalc, Id} | Buffer]).
