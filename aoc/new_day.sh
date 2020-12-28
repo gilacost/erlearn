@@ -35,7 +35,7 @@ readlines(FileName) ->
 %     [H | even_print(T)].
 
 parse([<<>>], Buffer) ->
-    Buffer;
+    lists:reverse(Buffer);
 parse([<<H/binary>> | T], Buffer) ->
     {Number, <<>>} = string:to_integer(H),
     parse(T, [Number | Buffer]).
