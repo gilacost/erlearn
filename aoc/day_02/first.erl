@@ -8,7 +8,6 @@ main() ->
     walk_through(PasswordList, []).
 
 walk_through([], ValidPasswords) ->
-    % erlang:display(ValidPasswords),
     length(ValidPasswords);
 walk_through([[{Min, Max}, L, Password] | T], ValidPasswords) ->
     Ocurrences = length([X || X <- Password, [X] =:= L]),
