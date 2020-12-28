@@ -24,68 +24,21 @@ readlines(FileName) ->
     BinSplit = binary:split(Data, [<<"\n">>], [global]),
     parse(BinSplit, []).
 
-ocurrences(List, El, string) -> length([X || X <- List, [X] =:= El),
+% ocurrences(List, El, string) -> length([X || X <- List, [X] =:= El]),
 
-even_print([]) ->
-    [];
-even_print([H | T]) when H rem 2 /= 0 ->
-    even_print(T);
-even_print([H | T]) ->
-    io:format("printing: ~p~n", [H]),
-    [H | even_print(T)].
+% even_print([]) ->
+%     [];
+% even_print([H | T]) when H rem 2 /= 0 ->
+%     even_print(T);
+% even_print([H | T]) ->
+%     io:format("printing: ~p~n", [H]),
+%     [H | even_print(T)].
 
 parse([<<>>], Buffer) ->
     Buffer;
 parse([<<H/binary>> | T], Buffer) ->
     {Number, <<>>} = string:to_integer(H),
     parse(T, [Number | Buffer]).
-EOF
-
-cat > $DIR/rebar.config <<EOF
-%% Erlang compiler options
-{erl_opts, [debug_info, warnings_as_errors]}.
-
-{dialyzer, [
-    {warnings, [underspecs, no_return]},
-    {get_warnings, true},
-    % top_level_deps | all_deps
-    {plt_apps, top_level_deps},
-    {plt_extra_apps, []},
-    % local | "/my/file/name"
-    {plt_location, local},
-    {plt_prefix, "rebar3"},
-    {base_plt_apps, [stdlib, kernel, crypto]},
-    % global | "/my/file/name"
-    {base_plt_location, global},
-    {base_plt_prefix, "rebar3"}
-]}.
-
-%% eunit:test(Tests)
-{eunit_tests, []}.
-
-%% Options for eunit:test(Tests, Opts)
-{eunit_opts, [verbose]}.
-
-%% == xref ==
-
-{xref_warnings, true}.
-
-%% xref checks to run
-{xref_checks, [
-    undefined_function_calls,
-    undefined_functions,
-    locals_not_used,
-    exports_not_used,
-    deprecated_function_calls,
-    deprecated_functions
-]}.
-
-{project_plugins, [erlfmt]}.
-
-{erlfmt, [
-    write,
-    {files, "**/*.{hrl,erl}"}
-]}.
 EOF
 }
 
