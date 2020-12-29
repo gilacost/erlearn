@@ -4,25 +4,32 @@
 
 main() ->
     Lines = readlines("input"),
-    erlang:display(Lines).
+    count_answers(Lines, 0).
+
+count_answers([], Acc) ->
+    Acc;
+count_answers([H | T], Acc) when length(H) == 1 ->
+    [GroupUniqAns] = sets:to_list(sets:from_list(H)),
+    count_answers(T, Acc + length(GroupUniqAns));
+count_answers([H | T], Acc) ->
+    SetList = to_set_list(H, []),
+    Intersection = sets:to_list(sets:intersection(SetList)),
+    CurrentGroupAnswers = length(Intersection),
+    count_answers(T, Acc + CurrentGroupAnswers).
+
+to_set_list([], SetList) -> SetList;
+to_set_list([H | T], SetList) -> to_set_list(T, [sets:from_list(H) | SetList]).
 
 readlines(FileName) ->
     {ok, Data} = file:read_file(FileName),
-    BinSplit = binary:split(Data, [<<"\n">>], [global]),
+    BinSplit = binary:split(Data, [<<"\n\n">>], [global]),
     parse(BinSplit, []).
 
-% ocurrences(List, El, string) -> length([X || X <- List, [X] =:= El]),
-
-% even_print([]) ->
-%     [];
-% even_print([H | T]) when H rem 2 /= 0 ->
-%     even_print(T);
-% even_print([H | T]) ->
-%     io:format("printing: ~p~n", [H]),
-%     [H | even_print(T)].
-
-parse([<<>>], Buffer) ->
+parse([], Buffer) ->
     lists:reverse(Buffer);
 parse([<<H/binary>> | T], Buffer) ->
-    {Number, <<>>} = string:to_integer(H),
-    parse(T, [Number | Buffer]).
+    Line = binary:bin_to_list(H),
+    LineTrimed = string:trim(Line),
+    Group = string:split(LineTrimed, "\n", all),
+
+    parse(T, [Group | Buffer]).
