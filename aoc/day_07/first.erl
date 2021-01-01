@@ -31,55 +31,23 @@ main(Input) ->
         )
     ).
 
-readlines(FileName) ->
-    {ok, Data} = file:read_file(FileName),
-    binary:split(Data, [<<"\n">>], [global]).
-
 parse_bags(Bags) when length(Bags) > 7 ->
-    {
-        [
-            <<Tone/binary>>,
-            <<Color/binary>>,
-            _,
-            _
-        ],
-
-        Rest
-    } = lists:split(4, Bags),
+    {[<<Tone/binary>>, <<Color/binary>>, _, _], Rest} = lists:split(4, Bags),
     Bag = binary:bin_to_list(<<Tone/binary, "_", Color/binary>>),
     RestLen = length(Rest) div 3,
 
     Chunks = chunks(lists:seq(0, RestLen), Rest, []),
     {list_to_atom(Bag),
         maps:from_list(
-            lists:map(
-                fun(
-                    [
-                        <<NQty/binary>>,
-                        <<NTone/binary>>,
-                        <<NColor/binary>>,
-                        _
-                    ]
-                ) ->
-                    NextContainedBag = binary:bin_to_list(<<NTone/binary, "_", NColor/binary>>),
-                    {list_to_atom(NextContainedBag), parse_int(NQty)}
-                end,
-                Chunks
-            )
+            lists:map(fun(X) -> rest(X) end, Chunks)
         )};
-parse_bags(
-    [
-        <<Tone/binary>>,
-        <<Color/binary>>,
-        _,
-        _,
-        _,
-        _,
-        _
-    ]
-) ->
+parse_bags([<<Tone/binary>>, <<Color/binary>>, _, _, _, _, _]) ->
     Bag = binary:bin_to_list(<<Tone/binary, "_", Color/binary>>),
     {list_to_atom(Bag), #{}}.
+
+rest([<<NQty/binary>>, <<NTone/binary>>, <<NColor/binary>>, _]) ->
+    NextContainedBag = binary:bin_to_list(<<NTone/binary, "_", NColor/binary>>),
+    {list_to_atom(NextContainedBag), parse_int(NQty)}.
 
 chunks([], _List, Buffer) ->
     Buffer;
@@ -99,3 +67,7 @@ parse([<<H/binary>> | T], Buffer) ->
     String = binary:split(H, [<<" ">>], [global]),
     BagContents = parse_bags(String),
     parse(T, [BagContents | Buffer]).
+
+readlines(FileName) ->
+    {ok, Data} = file:read_file(FileName),
+    binary:split(Data, [<<"\n">>], [global]).
