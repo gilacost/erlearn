@@ -8,11 +8,8 @@ main(Input) ->
 
     BagNames = maps:keys(Bags),
 
-    Fun = fun
-        F(K, _V, AccIn) when is_list(K) ->
-            [K] ++ maps:fold(F, AccIn, maps:get(K, Bags, #{}));
-        F(Bag, _V, AccIn) ->
-            [Bag] ++ maps:fold(F, AccIn, maps:get(Bag, Bags, #{}))
+    Fun = fun F(Bag, _V, AccIn) ->
+        [Bag] ++ maps:fold(F, AccIn, maps:get(Bag, Bags, #{}))
     end,
 
     BagsNested = lists:map(
