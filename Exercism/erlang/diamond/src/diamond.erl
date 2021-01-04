@@ -13,8 +13,8 @@ rows(Letter) ->
     ),
     Top ++ lists:reverse(lists:droplast(Top)).
 
-pad(Str, Length) when Str == "A" ->
-    LeftPad = string:pad(Str, Length, leading, " "),
+pad("A", Length) ->
+    LeftPad = string:pad("A", Length, leading, " "),
     RightPad = string:pad("", Length - 1, trailing, " "),
     string:concat(LeftPad, RightPad);
 pad(Str, Length) ->
